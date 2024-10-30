@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "871978926212",
+    "project_id": "shopzone-59ce9",
+    "storage_bucket": "shopzone-59ce9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:871978926212:android:ff6fcfd8d80979994102d1",
+        "android_client_info": {
+          "package_name": "com.example.shopzonee"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "871978926212-i5p0b52jdk8e0iudu8bg64c2pf4tfoiq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCsm3SEyq5l6jOmwEyZey1JWy1xK9inYls"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "871978926212-i5p0b52jdk8e0iudu8bg64c2pf4tfoiq.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "871978926212-m8fiboa0ubmuq3ga0n1i4u7tb98v6p0f.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.shopzonee"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

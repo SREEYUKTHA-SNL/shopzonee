@@ -6,11 +6,14 @@ import 'package:shopzonee/view/profilepage.dart';
 import 'package:shopzonee/view/your_cart.dart';
 
 class BottomNavigationPage extends StatefulWidget {
+  
+  
   @override
   _BottomNavigationPageState createState() => _BottomNavigationPageState();
 }
 
 class _BottomNavigationPageState extends State<BottomNavigationPage> {
+  
   int _selectedIndex = 0;
 
   // List of pages for each tab

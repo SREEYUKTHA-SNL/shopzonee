@@ -8,24 +8,23 @@ class FavoritesProvider extends ChangeNotifier {
   final ApiService apiService = ApiService();
   List<WishlistModel> _favoriteProducts = [];
   bool _isLoading = false;
+  int? chekIndex;
 
   List<WishlistModel> get favoriteProducts => _favoriteProducts;
   bool get isLoading => _isLoading;
 
   Future<void> addProductToFavorites(int productid, String userid) async {
-   
-      try {
-        await apiService.addToFavorites(
-          productid: productid.toString(),
-          userid: userid,
-        );
-        notifyListeners();
-      } catch (error) {
-        print('Error adding to favorites: $error');
-        _favoriteProducts.remove(productid);
-        notifyListeners();
-      }
-    
+    try {
+      await apiService.addToFavorites(
+        productid: productid.toString(),
+        userid: userid,
+      );
+      notifyListeners();
+    } catch (error) {
+      print('Error adding to favorites: $error');
+      _favoriteProducts.remove(productid);
+      notifyListeners();
+    }
   }
 
   void removeProductFromFavorites(int product) {
@@ -37,27 +36,21 @@ class FavoritesProvider extends ChangeNotifier {
     return _favoriteProducts.any((favProduct) => favProduct.id == productid);
   }
 
-  void toggleFavorite(int productid, String userid) {
-  
-      addProductToFavorites(productid, userid);
-      viewwishlists();
-    
+  void toggleFavorite(int productid, String userid, int index) async {
+    await addProductToFavorites(productid, userid);
+    await viewwishlists();
   }
 
   Future<void> viewwishlists() async {
-    
-
     try {
       _isLoading = true;
       notifyListeners();
       _favoriteProducts = await WishlistService().viewwishlist();
-      
     } catch (error) {
-     print( "Error fetching wishlist: $error");
+      print("Error fetching wishlist: $error");
     } finally {
       _isLoading = false;
       notifyListeners();
-   
     }
   }
 }

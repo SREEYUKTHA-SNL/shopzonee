@@ -19,6 +19,8 @@ class _FavoritesPageState extends State<FavoritesPage> {
     });
   }
 
+  int  ? checkIndex ;
+
   @override
   Widget build(BuildContext context) {
     final favoritesProvider = context.watch<FavoritesProvider>();
@@ -29,9 +31,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
       appBar: AppBar(
         title: const Text('Favorites'),
       ),
-      body: isLoading
-          ? const Center(child: CircularProgressIndicator())
-          : favoriteProducts.isEmpty
+      body: favoriteProducts.isEmpty
               ? const Center(child: Text('No favorite products yet.'))
               : ListView.builder(
                   itemCount: favoriteProducts.length,
@@ -85,12 +85,21 @@ class _FavoritesPageState extends State<FavoritesPage> {
                                 ),
                               ),
                               // Favorite Icon
-                              IconButton(
-                                icon: const Icon(Icons.favorite, color: Colors.red),
+                              
+        favoritesProvider.isLoading  ? const Center(child: CircularProgressIndicator())
+          : IconButton(
+                                icon: const Icon(
+                                  
+                                  Icons.favorite, color: Colors.red),
                                 onPressed: () {
+                                  checkIndex = index;
+
+
                                   final userid = context.read<UserProvider>().userId;
                                   
-                                  favoritesProvider.toggleFavorite(int.parse(product.productid!), userid!);
+                                  favoritesProvider.toggleFavorite(int.parse(product.productid!),userid!,index);
+
+                                 
                                 },
                               ),
                             ],

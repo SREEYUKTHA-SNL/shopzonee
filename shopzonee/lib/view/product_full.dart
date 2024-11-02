@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shopzonee/model/product_model.dart';
 import 'package:shopzonee/utils/colors.dart';
 import 'package:shopzonee/widget/appbar.dart';
 import 'package:shopzonee/widget/bottomnavbar.dart';
@@ -9,13 +10,17 @@ import 'package:shopzonee/widget/starrating.dart';
 
 
 class ProductFull extends StatefulWidget {
-  ProductFull({super.key});
+   final ProductModel product;
+  ProductFull({super.key, required this.product});
+ 
 
   @override
   _ProductFullState createState() => _ProductFullState();
 }
 
 class _ProductFullState extends State<ProductFull> {
+  
+   
   final List images = [
     "https://images.unsplash.com/photo-1516726817505-f5ed825624d8?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     "https://images.unsplash.com/photo-1521577352947-9bb58764b69a?q=80&w=1972&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -107,57 +112,66 @@ class _ProductFullState extends State<ProductFull> {
             physics: BouncingScrollPhysics(),
             child: Column(
               children: [
-                Stack(
-                  children: [
-                    SizedBox(
-                      height: 400.h,
-                      child: PageView.builder(
-                        controller: _pageController,
-                        itemCount: images.length,
-                        pageSnapping: true,
-                        physics: const BouncingScrollPhysics(),
-                        onPageChanged: (int page) {
-                          setState(() {
-                            _currentPage = page;
-                          });
-                        },
-                        itemBuilder: (context, pagePosition) {
-                          return Container(
-                            margin: const EdgeInsets.all(10),
-                            child: Image.network(
-                              images[pagePosition],
-                              fit: BoxFit
-                                  .contain, //using contain for now, might change later
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                    Positioned(
-                      bottom: 16,
-                      left: 0,
-                      right: 0,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: List.generate(images.length, (index) {
-                          return AnimatedContainer(
-                            duration: const Duration(milliseconds: 300),
-                            margin: const EdgeInsets.symmetric(horizontal: 4),
-                            child: Icon(
-                              _currentPage == index
-                                  ? Icons
-                                      .radio_button_checked // Icon for selected indicator
-                                  : Icons
-                                      .radio_button_off, // Icon for non-selected indicators
-                              size: _currentPage == index ? 15 : 12,
-                              color: kDarkgrey,
-                            ),
-                          );
-                        }),
-                      ),
-                    ),
-                  ],
-                ),
+                Center(
+              child: Image.network(
+                widget.product.image ?? '',
+                height: 600,
+                width:350,
+                fit: BoxFit.cover,
+              ),
+            ),
+
+                // Stack(
+                //   children: [
+                //     SizedBox(
+                //       height: 400.h,
+                //       child: PageView.builder(
+                //         controller: _pageController,
+                //         itemCount: images.length,
+                //         pageSnapping: true,
+                //         physics: const BouncingScrollPhysics(),
+                //         onPageChanged: (int page) {
+                //           setState(() {
+                //             _currentPage = page;
+                //           });
+                //         },
+                //         itemBuilder: (context, pagePosition) {
+                //           return Container(
+                //             margin: const EdgeInsets.all(10),
+                //             child: Image.network(
+                //               images[pagePosition],
+                //               fit: BoxFit
+                //                   .contain, //using contain for now, might change later
+                //             ),
+                //           );
+                //         },
+                //       ),
+                //     ),
+                //     Positioned(
+                //       bottom: 16,
+                //       left: 0,
+                //       right: 0,
+                //       child: Row(
+                //         mainAxisAlignment: MainAxisAlignment.center,
+                //         children: List.generate(images.length, (index) {
+                //           return AnimatedContainer(
+                //             duration: const Duration(milliseconds: 300),
+                //             margin: const EdgeInsets.symmetric(horizontal: 4),
+                //             child: Icon(
+                //               _currentPage == index
+                //                   ? Icons
+                //                       .radio_button_checked // Icon for selected indicator
+                //                   : Icons
+                //                       .radio_button_off, // Icon for non-selected indicators
+                //               size: _currentPage == index ? 15 : 12,
+                //               color: kDarkgrey,
+                //             ),
+                //           );
+                //         }),
+                //       ),
+                //     ),
+                //   ],
+                // ),
                 Container(
                   width: double.maxFinite,
                   padding: EdgeInsets.fromLTRB(32, 37, 32, 0),
@@ -180,14 +194,14 @@ class _ProductFullState extends State<ProductFull> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            'Sportwear Set',
+                         widget.product.productname!,
                             style: TextStyle(
                                 color: kPrimary,
                                 fontSize: 18.sp,
                                 fontWeight: FontWeight.bold),
                           ),
                           Text(
-                            '\$ 80.00',
+                             widget.product.price!,
                             style: TextStyle(
                                 color: kPrimary,
                                 fontSize: 26.sp,
@@ -219,7 +233,7 @@ class _ProductFullState extends State<ProductFull> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Color',
+                                 widget.product.color!,
                                 style: TextStyle(
                                     color: kSecondary, fontSize: 14.sp),
                               ),
@@ -263,7 +277,7 @@ class _ProductFullState extends State<ProductFull> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Size',
+                                 widget.product.size!,
                                 style: TextStyle(
                                     color: kSecondary, fontSize: 14.sp),
                               ),
@@ -339,7 +353,7 @@ class _ProductFullState extends State<ProductFull> {
                           ),
                           children: [
                             Text(
-                              'Sportswear is no longer under culture, it is no longer indie or cobbled together as it once was. Sport is fashion today. The top is oversized in fit and style, may need to size down.',
+                              widget.product.description!,
                               style: TextStyle(
                                 color: kDarkgrey,
                                 fontSize: 16.sp,
@@ -596,11 +610,13 @@ class _ProductFullState extends State<ProductFull> {
                       ),
                     ],
                   ),
-                )
+                ),
               ],
             ),
           ),
-          bottomNavigationBar: CustomBottomNavBar()),
-    );
+           bottomNavigationBar: CustomBottomNavBar()),
+            
+      );
+    
   }
 }

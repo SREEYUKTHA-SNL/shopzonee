@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shopzonee/view/accessproductpage.dart';
-import 'package:shopzonee/view/clothingproductpage.dart';
+import 'package:shopzonee/view/subcategorypage.dart';
 import 'package:shopzonee/view_model/category_viewmodel.dart';
 
 class DiscoverPage extends StatefulWidget {
+   DiscoverPage({super.key,});
+  
+
   @override
   State<DiscoverPage> createState() => _DiscoverPageState();
 }
@@ -24,10 +27,14 @@ class _DiscoverPageState extends State<DiscoverPage> {
     final isLoading = categoryViewModel.isLoading;
     final categories = categoryViewModel.categories;
 
+  
+
     // List of image paths
     final List<String> imagePaths = [
-      'assets/images/Frame 33149.png', // Image for first category
-      'assets/images/Frame 33123.png', // Image for second category
+      'assets/images/Frame 33149.png',
+       
+      'assets/images/Frame 33123.png', 
+      
       'assets/images/Frame 33124.png', // Image for third category
       'assets/images/Frame 33148.png', // Image for fourth category
       // Add more images if needed
@@ -78,13 +85,19 @@ class _DiscoverPageState extends State<DiscoverPage> {
                       String imagePath = index < imagePaths.length
                           ? imagePaths[index]
                           : imagePaths.last; // Use last image if categories exceed images
+
+
+
                       
                       return GestureDetector(
                         onTap: () {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => ClothingproductPage(title: category.categoryname ?? 'Category')),
+                                builder: (context) => SubcategoryScreen(
+                            
+                                  categoryId: category.id!, 
+                             ),),
                           );
                         },
                         child: _buildImageWithText(imagePath, category.categoryname ?? 'Category'),

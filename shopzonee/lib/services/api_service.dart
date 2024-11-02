@@ -109,6 +109,22 @@ class ApiService {
     }
   }
 
+  Future<List<ProductModel>> searchProducts(String query) async {
+    final response = await http.post(
+      Uri.parse('$baseUrl/search/'),
+      body: jsonEncode({'search_query': query}),
+      headers: {'Content-Type': 'application/json'},
+    );
+
+    if (response.statusCode == 200) {
+      return (json.decode(response.body)['data'] as List)
+          .map((item) => ProductModel.fromJson(item))
+          .toList();
+    } else {
+      throw Exception('No products found');
+    }
+  }
+
   Future<void> addToFavorites(
       {required String userid, required String productid}) async {
     final String url = '$baseUrl/addwishlist/';

@@ -24,7 +24,7 @@ class UserProvider extends ChangeNotifier {
    try{
      SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString('userId', userId);
-    _userId = userId; // Update the local userId variable
+    _userId = userId; 
  
     notifyListeners();
 

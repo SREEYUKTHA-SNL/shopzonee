@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shopzonee/services/shared_pref.dart';
-import 'package:shopzonee/view_model/fav_provider.dart';
+import 'package:shopzonee/view_model/fav_viewmodel.dart';
 
 class FavoritesPage extends StatefulWidget {
   const FavoritesPage({super.key});

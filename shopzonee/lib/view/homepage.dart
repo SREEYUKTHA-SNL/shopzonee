@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:shopzonee/routes/routes.dart';
 import 'package:shopzonee/services/shared_pref.dart';
 import 'package:shopzonee/widget/productcard.dart';
-import 'package:shopzonee/view_model/fetchproduct_mode.dart'; // Import your ProductProvider
+import 'package:shopzonee/view_model/fetchproduct_viewmodel.dart'; // Import your ProductProvider
 import 'package:flutter/services.dart'; // Import for SystemNavigator
 
 class HomePage extends StatefulWidget {

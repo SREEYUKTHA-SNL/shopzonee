@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shopzonee/model/subcatmodel.dart';
 import 'package:shopzonee/view/subcatproductspage.dart';
-import 'package:shopzonee/view_model/fetchproduct_mode.dart';
+import 'package:shopzonee/view_model/fetchproduct_viewmodel.dart';
 
 class SubcategoryScreen extends StatefulWidget {
   final int categoryId;

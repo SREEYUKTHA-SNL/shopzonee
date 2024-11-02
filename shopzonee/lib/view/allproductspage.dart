@@ -3,8 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:shopzonee/services/shared_pref.dart';
 import 'package:shopzonee/view/favpage.dart';
 import 'package:shopzonee/view/product_full.dart';
-import 'package:shopzonee/view_model/fav_provider.dart';
-import 'package:shopzonee/view_model/fetchproduct_mode.dart';
+import 'package:shopzonee/view_model/fav_viewmodel.dart';
+import 'package:shopzonee/view_model/fetchproduct_viewmodel.dart';
 
 class Allproductspage extends StatefulWidget {
   Allproductspage({super.key});
@@ -131,7 +131,9 @@ class _AllproductspageState extends State<Allproductspage> {
                                         decoration: BoxDecoration(
                                           borderRadius: BorderRadius.circular(20),
                                           image: DecorationImage(
-                                            image: NetworkImage(product.image ?? ''),
+                                            image: NetworkImage(
+                                              
+                                              product.image ?? ''),
                                             fit: BoxFit.cover,
                                           ),
                                         ),

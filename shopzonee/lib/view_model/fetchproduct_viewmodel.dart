@@ -12,31 +12,20 @@ import 'package:shopzonee/services/wishlist_service.dart';
 class ProductProvider with ChangeNotifier {
   final ApiService apiService = ApiService();
   final WishlistService wishlistService = WishlistService();
- 
-  
-    // Initialize the SubcategoryService
+
+  // Initialize the SubcategoryService
 
   List<ProductModel> products = [];
   List<ProductModel> subproducts = [];
   List<WishlistModel> whishListProduct = [];
- // List<Data> subcategories = []; // List to hold fetched subcategories
+  // List<Data> subcategories = []; // List to hold fetched subcategories
   bool isLoading = false;
   String? errorMessage;
-    final SubcategoryService subcategoryService = SubcategoryService();
+  final SubcategoryService subcategoryService = SubcategoryService();
   SubcategoryCategory? subcategoryData;
-
-
-  // Getter for products
   List<ProductModel> get productss => products;
-
-  // Getter for loading state
   bool get isLoadings => isLoading;
-
-  // Getter for error message
   String? get errorMessages => errorMessage;
-
-  // Getter for subcategories
- // List<Data> get subcategoriesList => subcategories;
 
   Future<void> fetchProducts() async {
     isLoading = true;
@@ -45,16 +34,12 @@ class ProductProvider with ChangeNotifier {
 
     try {
       products = await apiService.fetchProducts();
-      
-      
-       // Fetch products
-      whishListProduct = await wishlistService.viewwishlist(); 
 
-      
-      
-      // Fetch wishlist items
+
+      whishListProduct = await wishlistService.viewwishlist();
+
+  
     } catch (e) {
-      
       errorMessage = e.toString();
     } finally {
       isLoading = false;
@@ -62,7 +47,7 @@ class ProductProvider with ChangeNotifier {
     }
   }
 
-   Future<void> searchProducts(String query) async {
+  Future<void> searchProducts(String query) async {
     isLoading = true;
     notifyListeners();
     try {
@@ -75,19 +60,14 @@ class ProductProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  // bool checkFav(int productId) {
-  //   return products.any((product) => product.id == productId && product.isFavorite);
-  // }
-
-
-
-  Future<void> addtowishlist({required String userid, required String productid}) async {
+  Future<void> addtowishlist(
+      {required String userid, required String productid}) async {
     isLoading = true;
     errorMessage = null;
     notifyListeners();
 
     try {
-      // Implement the add to wishlist logic here
+  
     } catch (e) {
       errorMessage = e.toString();
     } finally {
@@ -96,20 +76,21 @@ class ProductProvider with ChangeNotifier {
     }
   }
 
-
-Future<void> fetchProductsbycatandsubcat({required int categoryId,required int subcategoryId}) async {
-  print('subcategory');
-  print(categoryId);
-  print(subcategoryId);
-
+  Future<void> fetchProductsbycatandsubcat(
+      {required int categoryId, required int subcategoryId}) async {
+    print('subcategory');
+    print(categoryId);
+    print(subcategoryId);
 
     isLoading = true;
     errorMessage = null;
     notifyListeners();
 
     try {
-      subproducts = await subcategoryService.fetchProductsByCategoryAndSubcategory(categoryId:  categoryId,subcategoryId:  subcategoryId);
-       whishListProduct = await wishlistService.viewwishlist();
+      subproducts =
+          await subcategoryService.fetchProductsByCategoryAndSubcategory(
+              categoryId: categoryId, subcategoryId: subcategoryId);
+      whishListProduct = await wishlistService.viewwishlist();
 
       print('view$subproducts');
     } catch (e) {
@@ -120,16 +101,16 @@ Future<void> fetchProductsbycatandsubcat({required int categoryId,required int s
     }
   }
 
-
- Future<void> fetchSubcategories(int catid) async {
+  Future<void> fetchSubcategories(int catid) async {
     isLoading = true;
     errorMessage = null;
     notifyListeners();
 
     try {
-       subcategoryData = await subcategoryService.fetchSubcategories(categoryId: catid); // Fetch subcategories from the service
+      subcategoryData = await subcategoryService.fetchSubcategories(
+          categoryId: catid); 
+
      
-     // Assign data to local subcategories list
     } catch (e) {
       errorMessage = e.toString();
     } finally {
@@ -139,7 +120,7 @@ Future<void> fetchProductsbycatandsubcat({required int categoryId,required int s
   }
 
   bool checkFav(int pid) {
-    // Check if any product in the wishlist matches the product id
+
     return whishListProduct.any((item) => item.productid == pid.toString());
   }
 }

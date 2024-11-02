@@ -59,6 +59,7 @@ class _ProductFullState extends State<ProductFull> {
 
   @override
   Widget build(BuildContext context) {
+    print('Prod ID: ${widget.product.id}');
     return SafeArea(
       child: Scaffold(
           extendBodyBehindAppBar: true,
@@ -115,8 +116,8 @@ class _ProductFullState extends State<ProductFull> {
                 Center(
               child: Image.network(
                 widget.product.image ?? '',
-                height: 600,
-                width:350,
+                height: 550,
+                width: 350,
                 fit: BoxFit.cover,
               ),
             ),
@@ -614,7 +615,7 @@ class _ProductFullState extends State<ProductFull> {
               ],
             ),
           ),
-           bottomNavigationBar: CustomBottomNavBar()),
+           bottomNavigationBar: CustomBottomNavBar(productID: widget.product.id! ,)),
             
       );
     

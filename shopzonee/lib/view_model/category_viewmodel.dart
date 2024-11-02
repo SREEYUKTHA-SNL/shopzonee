@@ -18,15 +18,14 @@ class CategoryViewmodel extends ChangeNotifier {
     _isLoading = true;
     notifyListeners();
     try {
-      // Use ApiService to fetch categories
       _categories = await categoryService.viewCategory();
 
       print(_categories);
     } catch (error) {
       print("Error fetching categories: $error");
     } finally {
-      _isLoading = false; // Set loading to false in finally block
-      notifyListeners(); // Notify listeners about the change
+      _isLoading = false;
+      notifyListeners();
     }
   }
 }

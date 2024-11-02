@@ -12,7 +12,7 @@ class CartService {
       {required String productid, required String userId}) async {
     try {
      
-      final url = Uri.parse("$baseUrl/addcartapi//");
+      final url = Uri.parse("$baseUrl/addcartapi/");
       print(url);
 
    

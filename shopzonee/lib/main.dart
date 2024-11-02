@@ -11,11 +11,12 @@ import 'package:shopzonee/view/homepage.dart';
 import 'package:shopzonee/view/product_full.dart';
 import 'package:shopzonee/view/profilepage.dart';
 import 'package:shopzonee/view/your_cart.dart';
+import 'package:shopzonee/view_model/cart_viewmodel.dart';
 import 'package:shopzonee/view_model/category_viewmodel.dart';
-import 'package:shopzonee/view_model/fav_provider.dart'; // Import the FavoritesProvider
+import 'package:shopzonee/view_model/fav_viewmodel.dart'; // Import the FavoritesProvider
 import 'package:firebase_core/firebase_core.dart'; // Import Firebase core
-import 'package:shopzonee/view_model/fetchproduct_mode.dart';
-import 'package:shopzonee/view_model/signup_provider.dart';
+import 'package:shopzonee/view_model/fetchproduct_viewmodel.dart';
+import 'package:shopzonee/view_model/signup_viewmodel.dart';
 import 'firebase_options.dart'; // Make sure this is the correct path to your Firebase options
 
 void main() async {
@@ -47,6 +48,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => ProductProvider()),
         ChangeNotifierProvider(create: (_) => UserProvider()),
         ChangeNotifierProvider(create: (_) => CategoryViewmodel()),
+        ChangeNotifierProvider(create: (_) => CartViewModel()),
+
       ],
       child: ScreenUtilInit(
         designSize: const Size(375, 812),
@@ -57,9 +60,7 @@ class MyApp extends StatelessWidget {
               primarySwatch: Colors.blue,
               visualDensity: VisualDensity.adaptivePlatformDensity,
             ),
-            initialRoute: userId != null
-                ? AppRoutes.bottomnavpage
-                : AppRoutes.welcomePage,
+            initialRoute:  AppRoutes.welcomePage,
             onGenerateRoute: (settings) => AppRoutes.generateRoute(settings),
             debugShowCheckedModeBanner: false,
             // Optionally, you can specify the home route like this:

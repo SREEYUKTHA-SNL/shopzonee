@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shopzonee/routes/routes.dart';
-import 'package:shopzonee/view_model/signup_provider.dart';
+import 'package:shopzonee/view_model/signup_viewmodel.dart';
 
 class SignupPage extends StatefulWidget {
   @override

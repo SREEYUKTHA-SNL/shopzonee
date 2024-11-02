@@ -3,8 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:shopzonee/services/shared_pref.dart';
 import 'package:shopzonee/view/favpage.dart';
-import 'package:shopzonee/view_model/fav_provider.dart';
-import 'package:shopzonee/view_model/fetchproduct_mode.dart';
+import 'package:shopzonee/view_model/fav_viewmodel.dart';
+import 'package:shopzonee/view_model/fetchproduct_viewmodel.dart';
 // Assuming the model class is stored in the `model` folder
 
 class SubcatproductPage extends StatefulWidget {

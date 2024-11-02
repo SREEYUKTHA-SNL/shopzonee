@@ -29,9 +29,7 @@ class UserProvider extends ChangeNotifier {
     notifyListeners();
 
    }catch(e){
-
-
-   } // Notify listeners when the user ID is updated
+} // Notify listeners when the user ID is updated
   }
 
   // Remove user ID from shared preferences

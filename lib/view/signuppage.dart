@@ -13,10 +13,10 @@ class _SignupPageState extends State<SignupPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmpasswordController = TextEditingController();
+  final TextEditingController _confirmpasswordController =
+      TextEditingController();
 
-
-  bool _isLoading = false; // Track the loading state
+  bool _isLoading = false;
 
   @override
   void dispose() {
@@ -57,11 +57,15 @@ class _SignupPageState extends State<SignupPage> {
                     ),
                     SizedBox(height: 20),
                     _buildTextField('Full Name', Icons.person, _nameController),
-                    _buildTextField('Email Address', Icons.email, _emailController),
-                    _buildTextField('Phone Number', Icons.phone, _phoneController),
-                    _buildTextField('Password', Icons.lock, _passwordController, isPassword: true),
-                    _buildTextField('confirmpassword', Icons.lock, _confirmpasswordController, isPassword: true),
-
+                    _buildTextField(
+                        'Email Address', Icons.email, _emailController),
+                    _buildTextField(
+                        'Phone Number', Icons.phone, _phoneController),
+                    _buildTextField('Password', Icons.lock, _passwordController,
+                        isPassword: true),
+                    _buildTextField('confirmpassword', Icons.lock,
+                        _confirmpasswordController,
+                        isPassword: true),
                     SizedBox(height: 30),
                     _buildSignupButton(),
                     SizedBox(height: 20),
@@ -82,7 +86,7 @@ class _SignupPageState extends State<SignupPage> {
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
                             ),
-                          ),  
+                          ),
                         ),
                       ],
                     ),
@@ -96,7 +100,8 @@ class _SignupPageState extends State<SignupPage> {
     );
   }
 
-  Widget _buildTextField(String hintText, IconData icon, TextEditingController controller,
+  Widget _buildTextField(
+      String hintText, IconData icon, TextEditingController controller,
       {bool isPassword = false}) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10),
@@ -167,10 +172,8 @@ class _SignupPageState extends State<SignupPage> {
             email: _emailController.text,
             password: _passwordController.text,
             number: _phoneController.text,
-           
-            
           );
-        ;
+      ;
 
       // Handle successful signup if needed
     } catch (e) {

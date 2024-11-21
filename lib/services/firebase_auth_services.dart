@@ -9,7 +9,7 @@ class Firebaseauthservices {
   Future<void> Signinwithgoogle() async {
     try {
       final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
-      if (googleUser == null) return; // User canceled the sign-in
+      if (googleUser == null) return; 
 
       final GoogleSignInAuthentication googleAuth =
           await googleUser.authentication;

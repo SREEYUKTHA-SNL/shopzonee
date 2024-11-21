@@ -46,12 +46,15 @@ class Signinviewmodel extends ChangeNotifier {
         password: password,
        
       );
-      
-      await context.read<UserProvider>().saveUserId(user.userId.toString());
-
+      print('jjjj');
+      print(user.data!.email);
+      await context.read<UserProvider>().saveLoginId(user.data!.loginId.toString());
+      print('hh');
+     
       Navigator.pushNamed(context, AppRoutes.bottomnavpage);
 
     } catch (e) {
+
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(e.toString()),

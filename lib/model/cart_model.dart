@@ -1,28 +1,4 @@
 class CartModel {
-  Data? data;
-  String? message;
-  int? success;
-
-  CartModel({this.data, this.message, this.success});
-
-  CartModel.fromJson(Map<String, dynamic> json) {
-    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
-    message = json['message'];
-    success = json['success'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.data != null) {
-      data['data'] = this.data!.toJson();
-    }
-    data['message'] = this.message;
-    data['success'] = this.success;
-    return data;
-  }
-}
-
-class Data {
   int? id;
   String? productid;
   String? productname;
@@ -32,8 +8,10 @@ class Data {
   String? description;
   String? price;
   String? image;
+  bool ? isSelected;
+  
 
-  Data(
+  CartModel(
       {this.id,
       this.productid,
       this.productname,
@@ -42,9 +20,10 @@ class Data {
       this.cartStatus,
       this.description,
       this.price,
+      this.isSelected = false,
       this.image});
 
-  Data.fromJson(Map<String, dynamic> json) {
+  CartModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     productid = json['productid'];
     productname = json['productname'];

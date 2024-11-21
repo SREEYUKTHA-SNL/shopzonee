@@ -1,7 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shopzonee/view/addrrssdetails.dart';
 import 'package:shopzonee/view/favpage.dart';
+import 'dart:io';
 
-class ProfilePage extends StatelessWidget {
+import 'package:shopzonee/view/orderpage.dart';
+import 'package:shopzonee/view/signinpage.dart';
+
+class ProfilePage extends StatefulWidget {
+  @override
+  _ProfilePageState createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
+  File? _profileImage; 
+  final ImagePicker _picker = ImagePicker(); 
+
+  Future<void> _pickImage() async {
+    final pickedFile = await _picker.pickImage(
+      source: ImageSource.gallery, 
+    );
+
+    if (pickedFile != null) {
+      setState(() {
+        _profileImage = File(pickedFile.path);
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,10 +48,43 @@ class ProfilePage extends StatelessWidget {
             padding: const EdgeInsets.all(16.0),
             child: Row(
               children: [
-                CircleAvatar(
-                  radius: 40,
-                  backgroundColor: Colors.grey[300],
-                  child: Icon(Icons.person, size: 40, color: Colors.white),
+                Stack(
+                  children: [
+                    GestureDetector(
+                      onTap: _pickImage, 
+                      child: CircleAvatar(
+                        radius: 40,
+                        backgroundColor: Colors.grey[300],
+                        backgroundImage: _profileImage != null
+                            ? FileImage(_profileImage!)
+                            : null, 
+                        child: _profileImage == null
+                            ? Icon(Icons.person, size: 40, color: Colors.white)
+                            : null,
+                      ),
+                    ),
+                    Positioned(
+                      bottom: 0,
+                      right: 0,
+                      child: GestureDetector(
+                        onTap: _pickImage,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.blue,
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(6.0),
+                            child: Icon(
+                              Icons.camera_alt,
+                              color: Colors.white,
+                              size: 20,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
                 SizedBox(width: 16),
                 Column(
@@ -57,7 +117,15 @@ class ProfilePage extends StatelessWidget {
                   context,
                   icon: Icons.location_on,
                   title: 'Address',
-                  onTap: () {},
+                  onTap: () async{
+                    SharedPreferences prefs=await SharedPreferences.getInstance();
+                  String? loginId=await prefs.getString('loginId');
+                     Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Viewaddress(loginId: int.tryParse(loginId!)!,)),
+                    );
+         
+                  },
                 ),
                 _buildProfileOption(
                   context,
@@ -67,17 +135,29 @@ class ProfilePage extends StatelessWidget {
                 ),
                 _buildProfileOption(
                   context,
-                  icon: Icons.card_giftcard,
-                  title: 'Voucher',
-                  onTap: () {},
+                  icon: Icons.shopping_bag_rounded,
+                  title: 'My Orders',
+                  onTap: () async{
+                    SharedPreferences prefs=await SharedPreferences.getInstance();
+                  String? loginId=await prefs.getString('loginId');
+                     Navigator.push(
+                      
+
+                      context,
+                      MaterialPageRoute(builder: (context) => OrderDetailsPage(userId: int.tryParse(loginId!)! ,)),
+                    );
+
+                  },
                 ),
                 _buildProfileOption(
                   context,
                   icon: Icons.favorite,
                   title: 'My Wishlist',
                   onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => FavoritesPage(),));
-
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => FavoritesPage()),
+                    );
                   },
                 ),
                 _buildProfileOption(
@@ -90,7 +170,9 @@ class ProfilePage extends StatelessWidget {
                   context,
                   icon: Icons.logout,
                   title: 'Log out',
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => SigninPage(),));
+                  },
                 ),
               ],
             ),

@@ -50,11 +50,14 @@ class ApiService {
   }) async {
     final String url = '$baseUrl/login/';
 
+    print(url);
+
     // Prepare the registration data
     final Map<String, String> loginData = {
       'password': password,
       'email': email,
     };
+    print(loginData);
 
     try {
       // Make the HTTP POST request
@@ -65,8 +68,9 @@ class ApiService {
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
+        print(data);
 
-        return UserModel.fromJson(data['data']);
+        return UserModel.fromJson(data);
       } else {
         String message = jsonDecode(response.body)['message'];
 
@@ -110,21 +114,37 @@ class ApiService {
   }
 
   Future<List<ProductModel>> searchProducts(String query) async {
-    final response = await http.post(
-      Uri.parse('$baseUrl/search/'),
-      body: jsonEncode({'search_query': query}),
-      headers: {'Content-Type': 'application/json'},
-    );
+    final String url = '$baseUrl/search/';
+    
+    try {
+      // Make POST request with encoded JSON data
+      final response = await http.post(
+        Uri.parse(url),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode({'search_query': query}),
+      );
 
-    if (response.statusCode == 200) {
-      return (json.decode(response.body)['data'] as List)
-          .map((item) => ProductModel.fromJson(item))
-          .toList();
-    } else {
-      throw Exception('No products found');
+      // Check response status and decode JSON data
+      if (response.statusCode == 200) {
+        final jsonResponse = jsonDecode(response.body);
+
+        // Parse product data into a list of ProductModel
+        return (jsonResponse['data'] as List)
+            .map((item) => ProductModel.fromJson(item))
+            .toList();
+      } else {
+        // Handle non-200 responses by decoding message safely
+        final decodedBody = jsonDecode(response.body);
+        final message = decodedBody['message'] ?? 'No products found';
+        throw Exception('Error ${response.statusCode}: $message');
+      }
+    } catch (e) {
+      // Throw a more informative exception
+      throw Exception('Failed to search products: $e');
     }
   }
-
   Future<void> addToFavorites(
       {required String userid, required String productid}) async {
     final String url = '$baseUrl/addwishlist/';

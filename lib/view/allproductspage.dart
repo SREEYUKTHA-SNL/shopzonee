@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shopzonee/services/shared_pref.dart';
-import 'package:shopzonee/view/favpage.dart';
-import 'package:shopzonee/view/product_full.dart';
 import 'package:shopzonee/view_model/fav_viewmodel.dart';
-import 'package:shopzonee/view_model/fetchproduct_viewmodel.dart';
+import '../view_model/fetchproduct_viewmodel.dart';
+import '../view/favpage.dart';
+import '../view/product_full.dart';
 
 class Allproductspage extends StatefulWidget {
   Allproductspage({super.key});
@@ -26,7 +26,6 @@ class _AllproductspageState extends State<Allproductspage> {
 
   @override
   Widget build(BuildContext context) {
-    
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -41,9 +40,7 @@ class _AllproductspageState extends State<Allproductspage> {
               onPressed: () async {
                 await Navigator.push(
                   context,
-                  MaterialPageRoute(
-                    builder: (context) => FavoritesPage(),
-                  ),
+                  MaterialPageRoute(builder: (context) => FavoritesPage()),
                 );
                 context.read<ProductProvider>().fetchProducts();
               },
@@ -54,10 +51,12 @@ class _AllproductspageState extends State<Allproductspage> {
         body: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 30),
+              padding:
+                  const EdgeInsets.symmetric(vertical: 10.0, horizontal: 30),
               child: Container(
                 decoration: BoxDecoration(
-                  color: const Color.fromARGB(255, 231, 223, 223).withOpacity(0.9),
+                  color:
+                      const Color.fromARGB(255, 231, 223, 223).withOpacity(0.9),
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: TextField(
@@ -69,8 +68,6 @@ class _AllproductspageState extends State<Allproductspage> {
                     contentPadding: EdgeInsets.symmetric(vertical: 15.0),
                   ),
                   onChanged: (query) {
-                    
-  
                     context.read<ProductProvider>().searchProducts(query);
                   },
                 ),
@@ -104,14 +101,17 @@ class _AllproductspageState extends State<Allproductspage> {
                         itemCount: products.length,
                         itemBuilder: (context, index) {
                           final product = products[index];
-                          final isFavorite = context.watch<ProductProvider>().checkFav(product.id!);
+                          final isFavorite = context
+                              .watch<ProductProvider>()
+                              .checkFav(product.id!);
 
                           return GestureDetector(
                             onTap: () {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => ProductFull(product: product),
+                                  builder: (context) =>
+                                      ProductFull(product: product),
                                 ),
                               );
                             },
@@ -126,14 +126,15 @@ class _AllproductspageState extends State<Allproductspage> {
                                   child: Stack(
                                     children: [
                                       Container(
-                                        height: 250,
+                                        height:
+                                            240, // Adjust height to fit better
                                         width: double.infinity,
                                         decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(20),
+                                          borderRadius:
+                                              BorderRadius.circular(20),
                                           image: DecorationImage(
                                             image: NetworkImage(
-                                              
-                                              product.image ?? ''),
+                                                product.image ?? ''),
                                             fit: BoxFit.cover,
                                           ),
                                         ),
@@ -149,14 +150,27 @@ class _AllproductspageState extends State<Allproductspage> {
                                           ),
                                           child: IconButton(
                                             icon: Icon(
-                                              isFavorite ? Icons.favorite : Icons.favorite_border,
-                                              color: isFavorite ? Colors.red : Colors.grey[400],
+                                              isFavorite
+                                                  ? Icons.favorite
+                                                  : Icons.favorite_border,
+                                              color: isFavorite
+                                                  ? Colors.red
+                                                  : Colors.grey[400],
                                               size: 25,
                                             ),
                                             onPressed: () {
-                                              final userid = Provider.of<UserProvider>(context, listen: false).userId;
-                                              context.read<FavoritesProvider>().toggleFavorite(product.id!, userid!, index);
-                                              context.read<ProductProvider>().fetchProducts();
+                                              final userId =
+                                                  Provider.of<UserProvider>(
+                                                          context,
+                                                          listen: false)
+                                                      .loginId;
+                                              context
+                                                  .read<FavoritesProvider>()
+                                                  .toggleFavorite(product.id!,
+                                                      userId!, index);
+                                              context
+                                                  .read<ProductProvider>()
+                                                  .fetchProducts();
                                             },
                                           ),
                                         ),
@@ -165,9 +179,11 @@ class _AllproductspageState extends State<Allproductspage> {
                                   ),
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 8.0, vertical: 8.0),
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         product.productname ?? 'No name',
@@ -175,6 +191,8 @@ class _AllproductspageState extends State<Allproductspage> {
                                           fontSize: 16,
                                           fontWeight: FontWeight.bold,
                                         ),
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
                                       ),
                                       SizedBox(height: 4),
                                       Text(
@@ -183,7 +201,10 @@ class _AllproductspageState extends State<Allproductspage> {
                                           fontSize: 14,
                                           color: Colors.grey[600],
                                         ),
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
                                       ),
+                                      Text('Free Delivery'),
                                     ],
                                   ),
                                 ),

@@ -2,41 +2,36 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserProvider extends ChangeNotifier {
-  String? _userId;
+  String? _loginId;
 
-  // Getter for userId
-  String? get userId => _userId;
 
-  // Load user ID from shared preferences
-  Future<String?> loadUserId() async {
-  
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-  
-    _userId = prefs.getString('userId');
-    
-  
-    notifyListeners(); 
-    return _userId;// Notify listeners when the user ID is loaded
-  }
+  String? get loginId => _loginId;
 
-  // Save user ID to shared preferences
-  Future<void> saveUserId(String userId) async {
-   try{
-     SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString('userId', userId);
-    _userId = userId; 
  
+  Future<void> loadLoginId() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    _loginId = prefs.getString('loginId');
     notifyListeners();
-
-   }catch(e){
-} // Notify listeners when the user ID is updated
   }
 
-  // Remove user ID from shared preferences
-  Future<void> removeUserId() async {
+
+  Future<void> saveLoginId(String loginId) async {
+    try {
+      print('kkk');
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setString('loginId', loginId);
+      _loginId = loginId;
+      notifyListeners();
+    } catch (e) {
+      print('Failed to save loginId: $e');
+    }
+  }
+
+  // Remove login ID from shared preferences
+  Future<void> removeLoginId() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.remove('userId');
-    _userId = null; // Clear the local userId variable
-    notifyListeners(); // Notify listeners when the user ID is removed
+    await prefs.remove('loginId');
+    _loginId = null; // Clear the local loginId variable
+    notifyListeners(); // Notify listeners when the login ID is removed
   }
 }

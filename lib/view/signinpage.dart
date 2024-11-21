@@ -177,12 +177,12 @@ class _SigninPageState extends State<SigninPage>
     );
   }
   Widget _buildSigninButton() {
-    return Consumer<Signupviewmodel>(
-      builder: (context, signupViewModel, child) {
+    return Consumer<Signinviewmodel>(
+      builder: (context, signinviewmodel, child) {
         return InkWell(
           onTap: () {
            
-              Signinviewmodel().login(
+              signinviewmodel.login(
                 email: _emailController.text,
                 password: _passwordController.text,
                 context: context,
@@ -193,7 +193,7 @@ class _SigninPageState extends State<SigninPage>
             width: double.infinity,
             padding: EdgeInsets.symmetric(vertical: 15),
             decoration: BoxDecoration(
-              color: signupViewModel.loading ? Colors.grey : Colors.black,
+              color: signinviewmodel.loading ? Colors.grey : Colors.black,
               borderRadius: BorderRadius.circular(30),
               boxShadow: [
                 BoxShadow(
@@ -204,7 +204,7 @@ class _SigninPageState extends State<SigninPage>
               ],
             ),
             child: Center(
-              child: signupViewModel.loading
+              child: signinviewmodel.loading
                   ? CircularProgressIndicator(
                       color: Colors.white,
                     )

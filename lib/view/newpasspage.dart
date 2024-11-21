@@ -29,7 +29,7 @@ class _CreateNewPasswordPageState extends State<CreateNewPasswordPage> {
       ),
       builder: (context) {
         return Container(
-          width: double.infinity, // Set width to fill the entire screen
+          width: double.infinity,
           padding: const EdgeInsets.all(20.0),
           child: SingleChildScrollView(
             child: Column(
@@ -93,7 +93,7 @@ class _CreateNewPasswordPageState extends State<CreateNewPasswordPage> {
       appBar: AppBar(
         leading: IconButton(
           icon: Icon(
-            Icons.arrow_back_ios, // iOS-style back arrow
+            Icons.arrow_back_ios,
             color: Colors.black,
           ),
           onPressed: () {
@@ -117,7 +117,7 @@ class _CreateNewPasswordPageState extends State<CreateNewPasswordPage> {
               ),
               textAlign: TextAlign.center,
             ),
-            SizedBox(height: 5), // Reduced height here
+            SizedBox(height: 5),
             Text(
               "Your new password must be different from previously used passwords.",
               style: TextStyle(
@@ -126,7 +126,7 @@ class _CreateNewPasswordPageState extends State<CreateNewPasswordPage> {
               ),
               textAlign: TextAlign.center,
             ),
-            SizedBox(height: 30), // Reduced space here
+            SizedBox(height: 30),
             // Password TextField
             TextField(
               controller: _passwordController,
@@ -147,8 +147,8 @@ class _CreateNewPasswordPageState extends State<CreateNewPasswordPage> {
               ),
               onChanged: (text) => setState(() {}),
             ),
-            SizedBox(height: 15), // Reduced space here
-            // Confirm Password TextField
+            SizedBox(height: 15),
+
             TextField(
               controller: _confirmPasswordController,
               obscureText: _obscureConfirmPassword,
@@ -170,7 +170,7 @@ class _CreateNewPasswordPageState extends State<CreateNewPasswordPage> {
               ),
               onChanged: (text) => setState(() {}),
             ),
-            SizedBox(height: 50), // Reduced space here
+            SizedBox(height: 50),
             // Confirm Button
             GestureDetector(
               onTap: _isPasswordValid

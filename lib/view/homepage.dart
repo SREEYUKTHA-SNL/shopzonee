@@ -18,23 +18,23 @@ class _HomePageState extends State<HomePage> {
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<ProductProvider>().fetchProducts();
-      context.read<UserProvider>().loadUserId();
+      context.read<UserProvider>().loadLoginId();
     });
   }
 
   Future<bool> _onWillPop() async {
-    // This will exit the app
+ 
     SystemNavigator.pop();
-    return false; // Prevent the default back navigation behavior
+    return false; 
   }
 
   @override
   Widget build(BuildContext context) {
-    // Access the ProductProvider
+
     final productProvider = context.watch<ProductProvider>();
 
     return WillPopScope(
-      onWillPop: _onWillPop, // Intercept the back button
+      onWillPop: _onWillPop, 
       child: Scaffold(
         appBar: AppBar(
           leading: Icon(Icons.menu),
@@ -53,11 +53,11 @@ class _HomePageState extends State<HomePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Autumn Collection Banner with Overlay Text
+             
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Stack(
-                  alignment: Alignment.center, // Aligns the text to the center
+                  alignment: Alignment.center, 
                   children: [
                     ClipRRect(
                       borderRadius: BorderRadius.circular(8.0),
@@ -106,11 +106,11 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
 
-              // Display limited products
+            
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: SizedBox(
-                  height: 300, // Adjust the height to your preference
+                  height: 300, 
                   child: productProvider.isLoading
                       ? Center(child: CircularProgressIndicator())
                       : productProvider.errorMessage != null
@@ -119,7 +119,7 @@ class _HomePageState extends State<HomePage> {
                               scrollDirection: Axis.horizontal,
                               itemCount: productProvider.products.length < 3
                                   ? productProvider.products.length
-                                  : 3, // Limit to 3 products
+                                  : 3,
                               itemBuilder: (context, index) {
                                 final product = productProvider.products[index];
                                 return Padding(
@@ -145,7 +145,37 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
 
-              // Other content...
+              // Display remaining products after the first 3 (Recommended Products section)
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: SizedBox(
+                  height: 300, // Adjust the height as needed
+                  child: productProvider.isLoading
+                      ? Center(child: CircularProgressIndicator())
+                      : productProvider.errorMessage != null
+                          ? Center(child: Text('Error: ${productProvider.errorMessage}'))
+                          : ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: productProvider.products.length > 3
+                                  ? (productProvider.products.length - 3) < 4
+                                      ? productProvider.products.length - 3 // If less than 4 remaining products, show all
+                                      : 4 // Limit to 4 products
+                                  : 0, // Only show products if more than 3 exist
+                              itemBuilder: (context, index) {
+                                final product = productProvider.products[index + 3];
+                                return Padding(
+                                  padding: const EdgeInsets.only(right: 16.0),
+                                  child: ProductCard(
+                                    imageUrl: product.image ?? '',
+                                    productName: product.productname ?? 'No name',
+                                    productPrice: product.price ?? 'No price',
+                                  ),
+                                );
+                              },
+                            ),
+                ),
+              ),
+
               Padding(
                 padding: const EdgeInsets.only(left: 20, top: 20),
                 child: Text(

@@ -1,42 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:provider/provider.dart';
+import 'package:shopzonee/model/cart_model.dart';
 import 'package:shopzonee/routes/routes.dart';
 import 'package:shopzonee/utils/colors.dart';
+import 'package:shopzonee/view/checkoutpage2.dart';
+import 'package:shopzonee/view_model/cart_viewmodel.dart';
 import 'package:shopzonee/widget/appbar.dart';
 
-class YourCart extends StatelessWidget {
+class YourCart extends StatefulWidget {
   YourCart({super.key});
 
-  final List<Map<String, dynamic>> cartProducts = [
-    {
-      'name': 'Rice Crop Hoodie',
-      'price': '43.00',
-      'size': 'L',
-      'color': 'Cream',
-      'image':
-          'https://images.unsplash.com/photo-1516726817505-f5ed825624d8?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
-    },
-    {
-      'name': 'Gym Crop Top',
-      'price': '39.99',
-      'size': 'M',
-      'color': 'White',
-      'image':
-          'https://images.unsplash.com/photo-1521577352947-9bb58764b69a?q=80&w=1972&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
-    },
-    {
-      'name': 'Sports Sweater',
-      'price': '47.99',
-      'size': 'L',
-      'color': 'Black',
-      'image':
-          'https://images.unsplash.com/photo-1469460340997-2f854421e72f?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
-    },
-  ];
+  @override
+  State<YourCart> createState() => _YourCartState();
+}
+
+class _YourCartState extends State<YourCart> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      final cartProvider = Provider.of<CartViewModel>(context, listen: false);
+      cartProvider.fetchCartItems();
+    });
+  }
+
+  List<CartModel> selectedProvider = [];
 
   @override
   Widget build(BuildContext context) {
+    final cartProvider = Provider.of<CartViewModel>(context);
+    
+
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -74,8 +70,9 @@ class YourCart extends StatelessWidget {
               child: ListView.builder(
                 physics: BouncingScrollPhysics(),
                 padding: EdgeInsets.zero,
-                itemCount: cartProducts.length,
+                itemCount: cartProvider.cartItems.length,
                 itemBuilder: (context, index) {
+                  final CartModel products = cartProvider.cartItems[index];
                   return Slidable(
                     key: ValueKey(index),
                     startActionPane: ActionPane(
@@ -83,7 +80,7 @@ class YourCart extends StatelessWidget {
                       children: [
                         SlidableAction(
                           onPressed: (context) {
-                            // Handle delete action
+                            _confirmDelete(context, products.id, cartProvider);
                           },
                           backgroundColor: Colors.black,
                           foregroundColor: Colors.white,
@@ -124,7 +121,13 @@ class YourCart extends StatelessWidget {
                               topLeft: Radius.circular(20.r),
                               bottomLeft: Radius.circular(20.r),
                             ),
-                            child: Image.network(cartProducts[index]['image']),
+                            child: Image.network(
+                              products.image ??
+                                  'https://via.placeholder.com/150',
+                              fit: BoxFit.cover,
+                              width: 130.w,
+                              height: 130.h,
+                            ),
                           ),
                           Expanded(
                             child: Padding(
@@ -135,7 +138,7 @@ class YourCart extends StatelessWidget {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    cartProducts[index]['name'],
+                                    products.productname ?? 'Unknown Product',
                                     style: TextStyle(
                                       color: kPrimary,
                                       fontSize: 16.sp,
@@ -143,19 +146,70 @@ class YourCart extends StatelessWidget {
                                     ),
                                   ),
                                   Text(
-                                    '\$${cartProducts[index]['price']}',
+                                    products.price != null
+                                        ? '\$${products.price}'
+                                        : 'Price not available',
                                     style: TextStyle(
                                       color: kPrimary,
                                       fontSize: 20.sp,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                  Text(
-                                    'Size: ${cartProducts[index]['size']} | Color: ${cartProducts[index]['color']}',
-                                    style: TextStyle(
-                                      color: kSecondary,
-                                      fontSize: 14.sp,
-                                    ),
+                                  Row(
+                                    children: [
+                                      IconButton(
+                                        icon: Icon(Icons.remove_circle_outline,
+                                            color: Colors.black),
+                                        onPressed: () {
+                                          // if (product.quantity > 1) {
+                                          //   cartProvider.decrementQuantity(product);
+                                          // }
+                                        },
+                                      ),
+                                      Text(
+                                        '${products.quantity}',
+                                        style: TextStyle(
+                                          fontSize: 16.sp,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      IconButton(
+                                        icon: Icon(Icons.add_circle_outline,
+                                            color: Colors.black),
+                                        onPressed: () {
+                                          // cartProvider.incrementQuantity(product);
+                                        },
+                                      ),
+                                      Checkbox(
+                                        value: cartProvider
+                                                    .selectedItems.length >
+                                                index
+                                            ? cartProvider.selectedItems[index]
+                                            : false,
+                                        onChanged: (bool? value) {
+                                          if (index <
+                                              cartProvider
+                                                  .selectedItems.length) {
+                                            cartProvider.selectedItems[index] =
+                                                value ?? false;
+
+                                            products.isSelected = cartProvider.selectedItems[index];
+
+                                            if(products.isSelected == true){
+                                              selectedProvider.add(products);
+                                            }else{
+                                               selectedProvider.remove(products);
+
+                                            }
+                                            cartProvider.calculateTotalPrice();
+                                                 // Recalculate total price when selection changes
+
+
+                                            
+                                          }
+                                        },
+                                      )
+                                    ],
                                   ),
                                 ],
                               ),
@@ -169,7 +223,7 @@ class YourCart extends StatelessWidget {
               ),
             ),
             GestureDetector(
-              onTap: () => _showBottomSheet(context),
+              onTap: () => _showBottomSheet(context,selectedProvider),
               child: Container(
                 height: 50.h,
                 width: double.maxFinite,
@@ -202,7 +256,9 @@ class YourCart extends StatelessWidget {
   }
 }
 
-void _showBottomSheet(BuildContext context) {
+void _showBottomSheet(BuildContext context,List<CartModel> selectedCart) {
+  final cartProvider = Provider.of<CartViewModel>(context, listen: false);
+
   showModalBottomSheet(
     context: context,
     shape: RoundedRectangleBorder(
@@ -229,19 +285,6 @@ void _showBottomSheet(BuildContext context) {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Product price',
-                  style: TextStyle(color: kSecondary, fontSize: 14.sp),
-                ),
-                Text(
-                  '\$110',
-                  style: TextStyle(color: kPrimary, fontSize: 15.sp),
-                ),
-              ],
-            ),
             Divider(color: kLightgrey, height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -258,11 +301,13 @@ void _showBottomSheet(BuildContext context) {
               children: [
                 Text('Subtotal',
                     style: TextStyle(color: kPrimary, fontSize: 14.sp)),
-                Text('\$110',
-                    style: TextStyle(
-                        color: kPrimary,
-                        fontSize: 20.sp,
-                        fontWeight: FontWeight.bold)),
+                Text(
+                  '\$${cartProvider.totalPrice.toStringAsFixed(2)}',
+                  style: TextStyle(
+                      color: kPrimary,
+                      fontSize: 20.sp,
+                      fontWeight: FontWeight.bold),
+                ),
               ],
             ),
             SizedBox(height: 32.h),
@@ -273,7 +318,13 @@ void _showBottomSheet(BuildContext context) {
                     MaterialStateProperty.all(Size(double.maxFinite, 48.h)),
               ),
               onPressed: () {
-                Navigator.pushNamed(context, AppRoutes.check1);
+                // Navigate directly to the Checkout 2 page
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          CheckOut2(selectedCartItems: selectedCart),
+                    ));
               },
               child: Text('Proceed to checkout',
                   style: TextStyle(fontSize: 16.sp, color: Colors.white)),
@@ -282,5 +333,33 @@ void _showBottomSheet(BuildContext context) {
         ),
       );
     },
+  );
+}
+
+void _confirmDelete(
+    BuildContext context, int? cartItemId, CartViewModel cartProvider) {
+  showDialog(
+    context: context,
+    builder: (ctx) => AlertDialog(
+      title: Text('Delete Item'),
+      content:
+          Text('Are you sure you want to delete this item from your cart?'),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.of(ctx).pop(),
+          child: Text('Cancel'),
+        ),
+        TextButton(
+          onPressed: () async {
+            Navigator.of(ctx).pop();
+            if (cartItemId != null) {
+              await cartProvider.deleteCartItem(
+                  cartItemId: cartItemId.toString());
+            }
+          },
+          child: Text('Delete'),
+        ),
+      ],
+    ),
   );
 }

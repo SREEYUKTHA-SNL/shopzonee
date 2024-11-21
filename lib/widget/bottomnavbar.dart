@@ -1,4 +1,4 @@
-import 'dart:ffi';
+
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -34,16 +34,16 @@ class CustomBottomNavBar extends StatelessWidget {
           TextButton(
             onPressed: () async {
               SharedPreferences prefs = await SharedPreferences.getInstance();
-              String? userId = prefs.getString('userId');
-              print("User ID: ${userId}");
+              String? loginId = prefs.getString('loginId');
+              print("User ID: ${loginId}");
 
-              if (userId != null) {
+              if (loginId != null) {
 
                 print("Product id: ${productID}");
 
                 Provider.of<CartViewModel>(context, listen: false).addToCart(
                   productid: productID.toString(),
-                  userId: userId,
+                  userId: loginId,
                 );
 
                 

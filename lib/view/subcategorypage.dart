@@ -32,7 +32,7 @@ class _SubcategoryScreenState extends State<SubcategoryScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Subcategories'),
+        title: const Text(''),
       ),
       body: Consumer<ProductProvider>(
   builder: (context, provider, child) {
@@ -107,13 +107,13 @@ class SubcategoryCard extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        color: Colors.white, // Background color for the card
+        color: Colors.white,
         boxShadow: [
           BoxShadow(
             color: Colors.grey.withOpacity(0.2),
             spreadRadius: 2,
             blurRadius: 5,
-            offset: const Offset(0, 3), // changes position of shadow
+            offset: const Offset(0, 3),
           ),
         ],
       ),
@@ -126,8 +126,8 @@ class SubcategoryCard extends StatelessWidget {
               child: Image.network(
                 imageUrl,
                 fit: BoxFit.cover,
-                width: double.infinity, // Full width of the container
-                errorBuilder: (context, error, stackTrace) => const Icon(Icons.error), // Handle image error
+                width: double.infinity, 
+                errorBuilder: (context, error, stackTrace) => const Icon(Icons.error), 
               ),
             ),
           ),

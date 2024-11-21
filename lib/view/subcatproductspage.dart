@@ -3,9 +3,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:shopzonee/services/shared_pref.dart';
 import 'package:shopzonee/view/favpage.dart';
+import 'package:shopzonee/view/product_full.dart';
 import 'package:shopzonee/view_model/fav_viewmodel.dart';
 import 'package:shopzonee/view_model/fetchproduct_viewmodel.dart';
-// Assuming the model class is stored in the `model` folder
+
 
 class SubcatproductPage extends StatefulWidget {
   SubcatproductPage({super.key, required this.categoryId, required this.subcategoryId});
@@ -48,7 +49,7 @@ class _SubcatproductPageState extends State<SubcatproductPage> {
                     builder: (context) => FavoritesPage(),
                   ),
                 );
-                // Fetch products again to refresh the favorite status
+                
                 context.read<ProductProvider>().fetchProducts();
               },
               icon: Icon(Icons.favorite, color: Colors.red),
@@ -58,10 +59,9 @@ class _SubcatproductPageState extends State<SubcatproductPage> {
         body: Consumer<ProductProvider>(
           builder: (context, productProvider, child) {
             if (productProvider.isLoading) {
-              // Show a loading indicator while fetching products
+          
               return Center(child: CircularProgressIndicator());
             } else if (productProvider.errorMessage != null) {
-              // Show an error message if fetching products fails
               return Center(
                 child: Text(
                   'Error: ${productProvider.errorMessage}',
@@ -69,10 +69,8 @@ class _SubcatproductPageState extends State<SubcatproductPage> {
                 ),
               );
             } else if (productProvider.subproducts.isEmpty) {
-              // Show a message if no products are available
               return Center(child: Text('No products available'));
             } else {
-              // Display the products in a GridView
               final products = productProvider.subproducts;
 
               return Padding(
@@ -91,7 +89,15 @@ class _SubcatproductPageState extends State<SubcatproductPage> {
 
                     return GestureDetector(
                       onTap: () {
-                        // Navigate to product details page if needed
+
+                         Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      ProductFull(product: product),
+                                ),
+                              );
+
                       },
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -130,10 +136,10 @@ class _SubcatproductPageState extends State<SubcatproductPage> {
                                         size: 25,
                                       ),
                                       onPressed: () {
-                                        final userid = Provider.of<UserProvider>(context, listen: false).userId;
+                                        final userid = Provider.of<UserProvider>(context, listen: false).loginId;
 
                                         context.read<FavoritesProvider>().toggleFavorite(product.id!, userid!, index);
-                                        context.read<ProductProvider>().fetchProducts(); // Refresh product list
+                                        context.read<ProductProvider>().fetchProducts(); 
                                       },
                                     ),
                                   ),

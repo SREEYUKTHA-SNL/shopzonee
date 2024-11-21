@@ -5,7 +5,6 @@ class ForgotPasswordPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-    
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Padding(
@@ -14,18 +13,18 @@ class ForgotPasswordPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Title text with size 34
-              TextButton(onPressed: () {
-                
-              },child: 
-               Text('Forgot Password',style: TextStyle(
-                  fontSize: 34,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black
-                ),) ,
-                
+              TextButton(
+                onPressed: () {},
+                child: Text(
+                  'Forgot Password',
+                  style: TextStyle(
+                      fontSize: 34,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black),
+                ),
               ),
               SizedBox(height: 20),
-          
+
               // Multi-line descriptive text
               Text(
                 'Enter email associated with your account and we’ll send and email with intructions to reset your password',
@@ -37,7 +36,7 @@ class ForgotPasswordPage extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
               ),
               SizedBox(height: 50),
-          
+
               // TextField inside a Container with email icon
               Container(
                 decoration: BoxDecoration(
@@ -64,22 +63,28 @@ class ForgotPasswordPage extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 150),
-          
+
               // Button to submit email for password reset
-               Center(
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
+              Center(
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.black,
-                      padding: EdgeInsets.symmetric(horizontal: 50,vertical: 10) // Set the background color to black
-                    ),
-                    onPressed: () {
-                                     Navigator.pushNamed(context, AppRoutes.verification);
-                     
-                    },
-                    child: Text('Send OTP',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 18),),
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 50,
+                          vertical: 10) // Set the background color to black
+                      ),
+                  onPressed: () {
+                    Navigator.pushNamed(context, AppRoutes.verification);
+                  },
+                  child: Text(
+                    'Send OTP',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18),
                   ),
-                  
                 ),
+              ),
             ],
           ),
         ),

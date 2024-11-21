@@ -47,17 +47,23 @@ class ProductProvider with ChangeNotifier {
     }
   }
 
-  Future<void> searchProducts(String query) async {
+   Future<void> searchProducts(String query) async {
     isLoading = true;
+    errorMessage = null;
     notifyListeners();
+
     try {
-      products = await ApiService().searchProducts(query);
-      errorMessage = null;
+      // Fetch search results from ApiService and update the product list
+      products = await apiService.searchProducts(query);
+      errorMessage = null; // Reset any previous error messages
     } catch (e) {
-      errorMessage = 'No products found';
+      // Update error message if no products found or there's another error
+      errorMessage = e.toString();
+      products = []; // Clear products to show an empty state in the UI if needed
+    } finally {
+      isLoading = false;
+      notifyListeners();
     }
-    isLoading = false;
-    notifyListeners();
   }
 
   Future<void> addtowishlist(

@@ -59,8 +59,8 @@ class AppRoutes {
         return MaterialPageRoute(builder: (_) => VerificationPage());
       case check1:
         return MaterialPageRoute(builder: (_) => OrderPage());
-      case check2:
-        return MaterialPageRoute(builder: (_) => CheckOut2());
+    
+      
       case check3:
         return MaterialPageRoute(builder: (_) => Checkout3());
      

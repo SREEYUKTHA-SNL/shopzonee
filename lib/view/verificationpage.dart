@@ -49,7 +49,7 @@ class _VerificationPageState extends State<VerificationPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Title text with size 34
+           
               Text(
                 'Verification code',
                 style: TextStyle(
@@ -58,7 +58,7 @@ class _VerificationPageState extends State<VerificationPage> {
                 ),
               ),
               SizedBox(height: 20),
-              // Descriptive text
+             
               Text(
                 'Please enter the verification code we sent to your email address',
                 style: TextStyle(
@@ -69,7 +69,7 @@ class _VerificationPageState extends State<VerificationPage> {
                 overflow: TextOverflow.ellipsis,
               ),
               SizedBox(height: 30),
-              // Row for 4 circular text fields
+          
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: List.generate(4, (index) {

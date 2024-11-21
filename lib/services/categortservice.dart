@@ -15,21 +15,21 @@ class CategoryService {
 
         if (jsonResponse['success'] == true) {
           final List<dynamic> categoriesJson = jsonResponse['data'];
-          
-          // Map each JSON object to a CategoryModel object
+
           return categoriesJson
               .map((json) => CategoryModel.fromJson(json))
               .toList();
         } else {
           print("Failed to fetch categories: ${jsonResponse['message']}");
-          return []; // Return an empty list if not successful
+          return [];
         }
       } else {
-        throw Exception('Failed to fetch categories, Status code: ${response.statusCode}');
+        throw Exception(
+            'Failed to fetch categories, Status code: ${response.statusCode}');
       }
     } catch (e) {
       print("Error fetching categories: $e");
-      rethrow; // Pass error up if needed for higher-level handling
+      rethrow;
     }
   }
 }

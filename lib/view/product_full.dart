@@ -27,35 +27,12 @@ class _ProductFullState extends State<ProductFull> {
     "https://images.unsplash.com/photo-1469460340997-2f854421e72f?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
   ];
 
-  final List<Map<String, dynamic>> similiarProducts = [
-    {
-      'name': 'Rice Crop Hoodie',
-      'price': '43.00',
-      'image':
-          'https://images.unsplash.com/photo-1516726817505-f5ed825624d8?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
-    },
-    {
-      'name': 'Gym Crop Top',
-      'price': '39.99',
-      'image':
-          'https://images.unsplash.com/photo-1521577352947-9bb58764b69a?q=80&w=1972&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
-    },
-    {
-      'name': 'Sports Sweater',
-      'price': '47.99',
-      'image':
-          'https://images.unsplash.com/photo-1469460340997-2f854421e72f?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
-    },
-  ];
+ 
 
-  final PageController _pageController = PageController();
-  int _currentPage = 0;
+
 
   @override
-  void dispose() {
-    _pageController.dispose();
-    super.dispose();
-  }
+  
 
   @override
   Widget build(BuildContext context) {
@@ -122,57 +99,6 @@ class _ProductFullState extends State<ProductFull> {
               ),
             ),
 
-                // Stack(
-                //   children: [
-                //     SizedBox(
-                //       height: 400.h,
-                //       child: PageView.builder(
-                //         controller: _pageController,
-                //         itemCount: images.length,
-                //         pageSnapping: true,
-                //         physics: const BouncingScrollPhysics(),
-                //         onPageChanged: (int page) {
-                //           setState(() {
-                //             _currentPage = page;
-                //           });
-                //         },
-                //         itemBuilder: (context, pagePosition) {
-                //           return Container(
-                //             margin: const EdgeInsets.all(10),
-                //             child: Image.network(
-                //               images[pagePosition],
-                //               fit: BoxFit
-                //                   .contain, //using contain for now, might change later
-                //             ),
-                //           );
-                //         },
-                //       ),
-                //     ),
-                //     Positioned(
-                //       bottom: 16,
-                //       left: 0,
-                //       right: 0,
-                //       child: Row(
-                //         mainAxisAlignment: MainAxisAlignment.center,
-                //         children: List.generate(images.length, (index) {
-                //           return AnimatedContainer(
-                //             duration: const Duration(milliseconds: 300),
-                //             margin: const EdgeInsets.symmetric(horizontal: 4),
-                //             child: Icon(
-                //               _currentPage == index
-                //                   ? Icons
-                //                       .radio_button_checked // Icon for selected indicator
-                //                   : Icons
-                //                       .radio_button_off, // Icon for non-selected indicators
-                //               size: _currentPage == index ? 15 : 12,
-                //               color: kDarkgrey,
-                //             ),
-                //           );
-                //         }),
-                //       ),
-                //     ),
-                //   ],
-                // ),
                 Container(
                   width: double.maxFinite,
                   padding: EdgeInsets.fromLTRB(32, 37, 32, 0),
@@ -543,72 +469,7 @@ class _ProductFullState extends State<ProductFull> {
                           ],
                         ),
                       ),
-                      Theme(
-                        //*Similiar Products
-                        data: Theme.of(context)
-                            .copyWith(dividerColor: Colors.transparent),
-                        child: ExpansionTile(
-                          tilePadding: EdgeInsets.zero,
-                          childrenPadding: EdgeInsets.only(bottom: 15, top: 10),
-                          iconColor: kDarkgrey,
-                          title: Text(
-                            'Similiar Product',
-                            style: TextStyle(
-                                color: kPrimary,
-                                fontSize: 18.sp,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          children: [
-                            SizedBox(
-                              height: 250.h,
-                              child: ListView.builder(
-                                physics: BouncingScrollPhysics(),
-                                padding: EdgeInsets.zero,
-                                scrollDirection: Axis.horizontal,
-                                itemCount: similiarProducts.length,
-                                itemBuilder: (context, index) {
-                                  return Container(
-                                    margin: EdgeInsets.only(right: 20),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Container(
-                                          height: 172.h,
-                                          width: 126.w,
-                                          margin: EdgeInsets.only(bottom: 10),
-                                          child: ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(12.r),
-                                            child: Image.network(
-                                              similiarProducts[index]['image'],
-                                              fit: BoxFit.cover,
-                                            ),
-                                          ),
-                                        ),
-                                        Text(
-                                          similiarProducts[index]['name'],
-                                          style: TextStyle(
-                                            color: kPrimary,
-                                            fontSize: 13.sp,
-                                          ),
-                                        ),
-                                        Text(
-                                          '\$${similiarProducts[index]['price']}',
-                                          style: TextStyle(
-                                              color: kPrimary,
-                                              fontSize: 16.sp,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ],
-                                    ),
-                                  );
-                                },
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
+                     
                     ],
                   ),
                 ),

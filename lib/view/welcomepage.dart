@@ -12,7 +12,7 @@ class WelcomePage extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: [
-          // Background image
+       
           Container(
             width: double.infinity,
             child: Image.asset(
@@ -20,7 +20,7 @@ class WelcomePage extends StatelessWidget {
               fit: BoxFit.cover,
             ),
           ),
-          // Semi-transparent overlay
+         
           Container(
             width: double.infinity,
             height: double.infinity,

@@ -1,3 +1,14 @@
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        // Ensure the gradle plugin version is correct for your project
+        classpath 'com.android.tools.build:gradle:8.0.2'
+    }
+}
+
 allprojects {
     repositories {
         google()
@@ -6,13 +17,18 @@ allprojects {
 }
 
 rootProject.buildDir = "../build"
+
 subprojects {
+    // Configure build directories for subprojects
     project.buildDir = "${rootProject.buildDir}/${project.name}"
-}
-subprojects {
-    project.evaluationDependsOn(":app")
+
+    // Apply plugin configurations for the app module only
+    if (project.name == "app") {
+        evaluationDependsOn(":app")
+    }
 }
 
+// Define a clean task for deleting the root project build directory
 tasks.register("clean", Delete) {
     delete rootProject.buildDir
 }

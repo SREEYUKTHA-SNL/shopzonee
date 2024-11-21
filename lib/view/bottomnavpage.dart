@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shopzonee/services/shared_pref.dart';
 import 'package:shopzonee/utils/colors.dart';
 import 'package:shopzonee/view/discoverpage.dart';
 import 'package:shopzonee/view/homepage.dart';
@@ -6,37 +8,38 @@ import 'package:shopzonee/view/profilepage.dart';
 import 'package:shopzonee/view/your_cart.dart';
 
 class BottomNavigationPage extends StatefulWidget {
-  
-  
   @override
   _BottomNavigationPageState createState() => _BottomNavigationPageState();
 }
 
 class _BottomNavigationPageState extends State<BottomNavigationPage> {
-  
   int _selectedIndex = 0;
-
-  // List of pages for each tab
   final List<Widget> _pages = [
     HomePage(),
     DiscoverPage(),
     YourCart(),
     ProfilePage(),
   ];
-
-  // Function to handle tap on navigation item
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
     });
   }
+  @override
+  void initState() {
+
+    context.read<UserProvider>().loadLoginId();
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _pages[_selectedIndex], // Display the selected page
+      body: _pages[_selectedIndex],
       bottomNavigationBar: ClipRRect(
-        borderRadius: BorderRadius.only(topLeft: Radius.circular(30),topRight: Radius.circular(30)),
+        borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(30), topRight: Radius.circular(30)),
         child: BottomNavigationBar(
           showSelectedLabels: true,
           showUnselectedLabels: true,
@@ -65,10 +68,10 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
               label: 'Profile',
             ),
           ],
-          selectedItemColor: kPrimary, // Active item color
+          selectedItemColor: kPrimary,
           unselectedItemColor: kSecondary,
           type: BottomNavigationBarType.fixed,
-        
+
           // Inactive item color
         ),
       ),

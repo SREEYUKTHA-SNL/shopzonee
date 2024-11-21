@@ -20,7 +20,6 @@ class _Intro1pageState extends State<Intro1page> {
     return Scaffold(
       body: Stack(
         children: [
-          // PageView for swiping between intro pages
           PageView(
             controller: _pageController,
             onPageChanged: (index) {
@@ -46,7 +45,7 @@ class _Intro1pageState extends State<Intro1page> {
               ),
             ],
           ),
-          // Positioned dot indicator
+        
           Positioned(
             bottom: 190,
             left: 0,
@@ -64,7 +63,7 @@ class _Intro1pageState extends State<Intro1page> {
               ),
             ),
           ),
-          // Positioned button at the bottom, visible only on the third page
+         
           if (_currentPageIndex == 2)
             Positioned(
               bottom: 80,
@@ -84,7 +83,7 @@ class _Intro1pageState extends State<Intro1page> {
   Widget _buildPageContent({required String title, required String subtitle, required String imagePath}) {
     return Stack(
       children: [
-        // Positioned text at the top
+  
         Positioned(
           top: 80,
           left: 20,
@@ -121,7 +120,7 @@ class _Intro1pageState extends State<Intro1page> {
             color: const Color(0xff464447),
           ),
         ),
-        // Positioned second container with an image inside
+       
         Positioned(
           bottom: 250,
           left: 70,

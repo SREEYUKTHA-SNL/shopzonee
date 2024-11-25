@@ -145,7 +145,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
 
-              // Display remaining products after the first 3 (Recommended Products section)
+              
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: SizedBox(

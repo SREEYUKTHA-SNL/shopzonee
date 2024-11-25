@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:shopzonee/routes/routes.dart';
 import 'package:shopzonee/services/shared_pref.dart';
 import 'package:shopzonee/utils/colors.dart';
+import 'package:shopzonee/view/addrrssdetails.dart';
 import 'package:shopzonee/view_model/adrdeess_viewmodel.dart';
 
 
@@ -204,8 +205,8 @@ class _OrderPageState extends State<OrderPage> {
                                               addressViewModel.errorMessage!)),
                                     );
                                   } else {
-                                    Navigator.pushNamed(
-                                        context, AppRoutes.check2);
+                                     final id = context.read<UserProvider>().loginId;
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) => Viewaddress(loginId: int.parse(id!),),));
                                   }
                                 }
                               },

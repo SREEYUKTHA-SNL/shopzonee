@@ -8,6 +8,11 @@ class Signupviewmodel extends ChangeNotifier {
   final _firebaseauthservice = Firebaseauthservices();
 
   bool loading = false;
+    String _name = '';
+  String _email = '';
+
+  String get name => _name;
+  String get email => _email;
 
   // Method to set loading state
   void setLoading(bool value) {
@@ -37,6 +42,8 @@ class Signupviewmodel extends ChangeNotifier {
       required BuildContext context}) async {
     setLoading(true);
     try {
+       _name = name;
+      _email = email;
       await ApiService().registerUser(
         name: name,
         email: email,
@@ -49,7 +56,7 @@ class Signupviewmodel extends ChangeNotifier {
         SnackBar(
           content: Text('Register success'),
         ));
-      Navigator.pushNamed(context, AppRoutes.bottomnavpage);
+      Navigator.pushNamed(context, AppRoutes.signinPage);
 
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(

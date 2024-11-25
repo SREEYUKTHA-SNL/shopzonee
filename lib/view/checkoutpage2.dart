@@ -64,10 +64,6 @@ class _CheckOut2State extends State<CheckOut2> {
                 return Center(child: CircularProgressIndicator());
               }
 
-              if (addressViewModel.errorMessage != null) {
-                return Center(child: Text(addressViewModel.errorMessage!));
-              }
-
               List<Address> addresses = addressViewModel.addresses;
               Address? selectedAddress = addressViewModel.selectedAddress;
 
@@ -94,9 +90,36 @@ class _CheckOut2State extends State<CheckOut2> {
                               ? _buildAddressCard(selectedAddress)
                               : _buildAddressCard(addresses[0]))
                           : Center(
-                              child: Text(
-                                'No address found. Please add an address.',
-                                style: TextStyle(color: Colors.red),
+                              child: Column(
+                                children: [
+                                  Text(
+                                    'No address found.',
+                                    style: TextStyle(
+                                      color: Colors.red,
+                                      fontSize: 18,
+                                    ),
+                                  ),
+                                  SizedBox(height: 10),
+                                  ElevatedButton(
+                                    onPressed: () {
+                                       final id = context.read<UserProvider>().loginId;
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          
+                                          builder: (context) => Viewaddress(loginId:int.parse(id!) ,),
+                                        ),
+                                      );
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: kPrimary,
+                                    ),
+                                    child: Text(
+                                      'Add Address',
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                       Divider(),

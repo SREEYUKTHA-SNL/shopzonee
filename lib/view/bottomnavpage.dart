@@ -53,9 +53,9 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
               label: 'Home',
             ),
             BottomNavigationBarItem(
-              activeIcon: Icon(Icons.search),
-              icon: Icon(Icons.search_outlined),
-              label: 'Search',
+              activeIcon: Icon(Icons.category),
+              icon: Icon(Icons.category_outlined),
+              label: 'categories',
             ),
             BottomNavigationBarItem(
               activeIcon: Icon(Icons.shopping_bag),

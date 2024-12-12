@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shopzonee/model/cart_model.dart';
 import 'package:shopzonee/services/cart_service.dart';
 
@@ -27,10 +28,13 @@ class CartViewModel extends ChangeNotifier {
       final result = await _cartService.addToCart(productid: productid, userId: userId);
 print(result);
       if (result['success']) {
+        SharedPreferences prefs=await SharedPreferences.getInstance();
+                  String? loginId=await prefs.getString('loginId');
+                  print(loginId);
         
         _success = true;
         _message = "Item added to cart successfully!";
-        await fetchCartItems(); // Refresh cart items
+        await fetchCartItems(int.parse(loginId!)); // Refresh cart items
       } else {
         _success = false;
         _message = "Failed to add item to cart: ${result['error']}";
@@ -44,14 +48,15 @@ print(result);
     }
   }
 
-  Future<void> fetchCartItems() async {
+  Future<void> fetchCartItems(int userId) async {
     _isLoading = true;
     notifyListeners();
 
     try {
-      _cartItems = await _cartService.fetchCartItems();
-      print(cartItems.length);
-      selectedItems = List<bool>.filled(cartItems.length, false);
+      _cartItems = await _cartService.fetchCartItems(userId);
+
+      selectedItems = List<bool>.filled(_cartItems.length, false);
+      notifyListeners();
   
 
     } catch (error) {
@@ -70,11 +75,14 @@ print(result);
 
     try {
       final result = await _cartService.deleteCartItem(cartItemId: cartItemId);
+      SharedPreferences prefs=await SharedPreferences.getInstance();
+                  String? loginId=await prefs.getString('loginId');
 
       if (result['success']) {
         _success = true;
         _message = "Item deleted from cart successfully!";
-        await fetchCartItems(); // Refresh cart items after deletion
+        
+        await fetchCartItems(int.parse(loginId!)); // Refresh cart items after deletion
       } else {
         _success = false;
         _message = "Failed to delete item from cart: ${result['error']}";

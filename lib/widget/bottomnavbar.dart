@@ -1,15 +1,16 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:shopzonee/model/product_model.dart';
+
 import 'package:shopzonee/view_model/cart_viewmodel.dart';
 
 class CustomBottomNavBar extends StatelessWidget {
   final int productID;
-  const CustomBottomNavBar({super.key, required this.productID,});
+  const CustomBottomNavBar({
+    super.key,
+    required this.productID,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -17,9 +18,12 @@ class CustomBottomNavBar extends StatelessWidget {
     return Container(
       height: 77.h,
       decoration: BoxDecoration(
-          color: Color(0xff343434),
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(25.r), topRight: Radius.circular(25.r))),
+        color: Color(0xff343434),
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(25.r),
+          topRight: Radius.circular(25.r),
+        ),
+      ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -35,20 +39,16 @@ class CustomBottomNavBar extends StatelessWidget {
             onPressed: () async {
               SharedPreferences prefs = await SharedPreferences.getInstance();
               String? loginId = prefs.getString('loginId');
-              print("User ID: ${loginId}");
+         
 
               if (loginId != null) {
-
-                print("Product id: ${productID}");
+        
 
                 Provider.of<CartViewModel>(context, listen: false).addToCart(
                   productid: productID.toString(),
                   userId: loginId,
                 );
 
-                
-
-                // Show a snackbar message
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: Text("added to cart!"),
@@ -56,7 +56,6 @@ class CustomBottomNavBar extends StatelessWidget {
                   ),
                 );
               } else {
-                // Handle the case when loginId is null (user is not logged in)
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: Text("Please log in to add items to the cart."),

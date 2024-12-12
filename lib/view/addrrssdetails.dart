@@ -18,7 +18,7 @@ class Viewaddress extends StatefulWidget {
 }
 
 class _ViewaddressState extends State<Viewaddress> {
-  int? selectedIndex; // To track the selected card
+  int? selectedIndex; 
 
   @override
   void initState() {
@@ -32,7 +32,7 @@ class _ViewaddressState extends State<Viewaddress> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 3, // Number of tabs
+      length: 3, 
       child: SafeArea(
         child: Scaffold(
           appBar: AppBar(

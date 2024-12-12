@@ -4,6 +4,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:provider/provider.dart';
 import 'package:shopzonee/model/cart_model.dart';
 import 'package:shopzonee/routes/routes.dart';
+import 'package:shopzonee/services/shared_pref.dart';
 import 'package:shopzonee/utils/colors.dart';
 import 'package:shopzonee/view/checkoutpage2.dart';
 import 'package:shopzonee/view_model/cart_viewmodel.dart';
@@ -22,7 +23,8 @@ class _YourCartState extends State<YourCart> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       final cartProvider = Provider.of<CartViewModel>(context, listen: false);
-      cartProvider.fetchCartItems();
+        final id = context.read<UserProvider>().loginId;
+      cartProvider.fetchCartItems(int.parse(id!));
     });
   }
 

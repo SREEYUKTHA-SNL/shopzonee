@@ -20,6 +20,7 @@ import 'package:firebase_core/firebase_core.dart'; // Import Firebase core
 import 'package:shopzonee/view_model/fetchproduct_viewmodel.dart';
 import 'package:shopzonee/view_model/order_viewmodel.dart';
 import 'package:shopzonee/view_model/paymentviewmodel.dart';
+import 'package:shopzonee/view_model/profile_viewmodel.dart';
 import 'package:shopzonee/view_model/signinmodel.dart';
 import 'package:shopzonee/view_model/signup_viewmodel.dart';
 import 'firebase_options.dart'; // Make sure this is the correct path to your Firebase options
@@ -82,6 +83,8 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider(create: (_) => CategoryViewmodel()),
         ChangeNotifierProvider(create: (_) => CartViewModel()),
         ChangeNotifierProvider(create: (_) => AddressViewModel()),
+        ChangeNotifierProvider(create: (_) => ProfileViewModel()),
+
 
        
 

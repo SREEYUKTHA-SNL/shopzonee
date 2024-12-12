@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shopzonee/services/shared_pref.dart';
 import 'package:shopzonee/view/addrrssdetails.dart';
 import 'package:shopzonee/view/favpage.dart';
 import 'dart:io';
 
 import 'package:shopzonee/view/orderpage.dart';
 import 'package:shopzonee/view/signinpage.dart';
+import 'package:shopzonee/view_model/profile_viewmodel.dart';
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -16,6 +19,7 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   File? _profileImage; 
   final ImagePicker _picker = ImagePicker(); 
+  
 
   Future<void> _pickImage() async {
     final pickedFile = await _picker.pickImage(
@@ -29,8 +33,24 @@ class _ProfilePageState extends State<ProfilePage> {
     }
   }
 
+  Future<void>_fetchUserDetails()async{
+     final id = context.read<UserProvider>().loginId;
+     Provider.of<ProfileViewModel>(context,listen: false).fetchUserDetails(int.tryParse(id!)!);
+  }
+@override
+  void initState() {
+  super.initState();
+  WidgetsBinding.instance.addPostFrameCallback((_) {
+    _fetchUserDetails();
+  });
+}
   @override
   Widget build(BuildContext context) {
+    final profileViewModel=Provider.of<ProfileViewModel>(context);
+    final user=profileViewModel.user;
+    print(user);
+    final isloading=profileViewModel.isLoading;
+    final errormessage=profileViewModel.errorMessage;
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -42,7 +62,8 @@ class _ProfilePageState extends State<ProfilePage> {
           ),
         ],
       ),
-      body: Column(
+      body:isloading?Center(child: CircularProgressIndicator(),):errormessage!=null?Center(child: Text(errormessage),): user==null?Center(child: Text('No user data available'),)
+      : Column(
         children: [
           Padding(
             padding: const EdgeInsets.all(16.0),
@@ -91,7 +112,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Sunie Pham',
+                      user.username!,
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
@@ -99,7 +120,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                     SizedBox(height: 4),
                     Text(
-                      'sunieux@gmail.com',
+                      user.email!,
                       style: TextStyle(
                         color: Colors.grey[600],
                       ),

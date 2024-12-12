@@ -295,8 +295,9 @@ class _CheckOut2State extends State<CheckOut2> {
 
                             await placeOrderViewModel.placeOrder(
                                 cartidList: cartIdList.toList());
+                                  final id = context.read<UserProvider>().loginId;
 
-                            await cartViewModel.fetchCartItems();
+                            await cartViewModel.fetchCartItems(int.parse(id!));
 
                             if (placeOrderViewModel.successMessage != null) {
                               ScaffoldMessenger.of(context).showSnackBar(
